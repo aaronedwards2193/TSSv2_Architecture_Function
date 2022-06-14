@@ -1,0 +1,30 @@
+function Get-MachineArchitecture
+{
+
+    $Powershell_Architecture = Switch ([intptr]::Size) 
+    {
+
+        4 {"32-bit"}
+
+        8 {"64-bit"}      
+
+    }
+
+
+
+    $Machine_Architecture = (Get-WmiObject Win32_OperatingSystem).OSArchitecture
+
+    if($Powershell_Architecture -eq $Machine_Architecture)
+    {
+        return $true
+    }
+    else
+    {
+        Write-host "Your machine architecture is $($Machine_Architecture), but you're powershell console is $($Powershell_Architecture). Please open the correct powershell console that matches your marchine architecture and try again."
+        Read-Host "Press any key to continue"
+        Exit
+    }
+
+
+
+}
